@@ -1,5 +1,5 @@
 # Dream Escape
-The main idea of this project is to make the online booking more accessible to the users. It can be perceived as a travel agency that offers the possibility of renting elite villas.
+The main idea of this project is to make the online booking more accessible to the users. It can be perceived as an online travel agency that offers the possibility of renting elite villas.
 
 There are two roles: Admin, User.
 
