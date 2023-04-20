@@ -1,0 +1,7 @@
+com\project\controllers\PaymentControllerTest.class
+com\project\controllers\ArrangementControllerTest.class
+com\project\controllers\PlaceControllerTest.class
+com\project\controllers\UserControllerTest.class
+com\project\controllers\ReviewControllerTest.class
+com\project\controllers\PhotoForPlaceControllerTest.class
+com\project\controllers\AccommodationControllerTest.class
