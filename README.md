@@ -9,4 +9,6 @@ It offers users the opportunity to search certain vacation destinations, to sear
 
 The application offers additional possibilities for admin users, i.e. adding, deleting and editing the information related to the destinations and the villas that the agency presents.
 
-What is used: Spring Boot(multi-module project) + PostgreSQL + React + Bootstrap + Stripe.
+Many tests are provided for testing the service(evaluating the coverage using Pitest) and web layer of the backend.
+
+What is used: Spring Boot(multi-module project) + PostgreSQL + JUnit 5 + Mockito + React + Bootstrap + Stripe.
