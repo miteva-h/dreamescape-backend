@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.domain.Arrangement;
 import com.project.domain.dto.ArrangementDto;
+import com.project.domain.relations.ArrangementInOrder;
 import com.project.domain.relations.ArrangementInShoppingCart;
 
 import java.time.LocalDate;
@@ -17,6 +18,10 @@ public interface ArrangementService {
     Optional<Arrangement> add(ArrangementDto arrangementDto);
 
     List<ArrangementInShoppingCart> getAllArrangementsForUser(String username);
+
+    List<ArrangementInShoppingCart> getAllBookedArrangements();
+
+    List<ArrangementInOrder> getAllPaidArrangements();
 
     Optional<Arrangement> findById(Long id);
 

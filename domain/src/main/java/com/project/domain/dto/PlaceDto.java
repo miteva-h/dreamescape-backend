@@ -9,15 +9,19 @@ public class PlaceDto {
 
     private String name;
 
-    private String location;
-
     private String description;
 
+    private Double coordinate_x;
+
+    private Double coordinate_y;
+
     public PlaceDto(String name,
-                 String location,
-                 String description) {
+                    String description,
+                    Double coordinate_x,
+                    Double coordinate_y) {
         this.name = name;
-        this.location = location;
         this.description = description;
+        this.coordinate_x = coordinate_x;
+        this.coordinate_y = coordinate_y;
     }
 }

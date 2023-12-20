@@ -38,21 +38,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/roles", "/api/login", "/api/register",
+                .antMatchers( "/api/roles", "/api/login", "/api/register",
                         "/places", "/places/filter/**", "/places/{id}",
                         "/places/{id}/photos",
                         "/accommodations", "/places/{id}/accommodations", "/accommodations/{id}",
                         "/accommodations/type",
                         "/accommodations/board", "/accommodations/{id}/arrangements",
-                        "/accommodations/{id}/reviews").permitAll()
+                        "/accommodations/{id}/reviews", "/arrangements/booked", "/arrangements/paid").permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/arrangements/user", "/arrangements/add", "/arrangements/{id}/delete",
-                        "/reviews/add", "/reviews/{id}/delete", "/api/payment", "/orders/**").hasAuthority("USER")
+                .antMatchers("/arrangements/user", "/arrangements/add", "/arrangements/{id}/delete",
+                        "/reviews/add", "/reviews/{id}/delete", "/api/payment", "/orders/**", "/invoices")
+                .hasAuthority("USER")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/places/add", "/places/{id}/**", "/places/{id}/photo", "/photos/{id}/**",
-                        "/accommodations/add", "/accommodations/{id}/**").hasAuthority("ADMIN")
+                        "/accommodations/add", "/accommodations/{id}/**","/invoices").hasAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()

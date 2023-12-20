@@ -1,0 +1,20 @@
+# Maven target directory
+target/
+
+# IDE files
+#.idea/
+
+# Compiled class file
+*.class
+
+# Maven build files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Default ignored files
+/shelf/
+/workspace.xml

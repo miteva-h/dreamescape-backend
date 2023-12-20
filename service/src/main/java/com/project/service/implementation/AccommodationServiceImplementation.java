@@ -47,7 +47,7 @@ public class AccommodationServiceImplementation implements AccommodationService 
     public Optional<Accommodation> add(AccommodationDto accommodationDto) {
         if (!checkIfPresent(accommodationDto)) {
             Place place = this.placeRepository.findById(accommodationDto.getPlace()).orElseThrow(PlaceNotFoundException::new);
-            Accommodation accommodation = new Accommodation(accommodationDto.getName(), accommodationDto.getTypeOfAccommodation(), accommodationDto.getTypeOfBoard(), accommodationDto.getDescription(), place, accommodationDto.getPricePerNight(), accommodationDto.getPhoto());
+            Accommodation accommodation = new Accommodation(accommodationDto.getName(), accommodationDto.getTypeOfAccommodation(), accommodationDto.getTypeOfBoard(), accommodationDto.getSleeps(), accommodationDto.getDestination(), accommodationDto.getDescription(), accommodationDto.getCoordinate_x(), accommodationDto.getCoordinate_y(), place, accommodationDto.getPricePerNight(), accommodationDto.getPhoto());
             this.accommodationRepository.save(accommodation);
             return Optional.of(accommodation);
         }
@@ -60,7 +60,11 @@ public class AccommodationServiceImplementation implements AccommodationService 
         accommodation.setName(accommodationDto.getName());
         accommodation.setTypeOfAccommodation(accommodationDto.getTypeOfAccommodation());
         accommodation.setTypeOfBoard(accommodationDto.getTypeOfBoard());
+        accommodation.setSleeps(accommodationDto.getSleeps());
+        accommodation.setDestination(accommodationDto.getDestination());
         accommodation.setDescription(accommodationDto.getDescription());
+        accommodation.setCoordinate_x(accommodationDto.getCoordinate_x());
+        accommodation.setCoordinate_x(accommodationDto.getCoordinate_y());
         Place place = this.placeRepository.findById(accommodationDto.getPlace()).orElseThrow(PlaceNotFoundException::new);
         accommodation.setPlace(place);
         accommodation.setPricePerNight(accommodationDto.getPricePerNight());

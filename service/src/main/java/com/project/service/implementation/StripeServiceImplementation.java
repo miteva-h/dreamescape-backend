@@ -50,10 +50,11 @@ public class StripeServiceImplementation implements StripeService {
 
         User user = this.userRepository.findByUsername(chargeRequest.getUser()).orElseThrow(UserNotFoundException::new);
         Order order = this.orderRepository.findByUser(user).orElseGet(() -> this.orderRepository.save(new Order(user)));
+        System.out.println(order.getId());
         Arrangement arrangement = this.arrangementRepository.findById(chargeRequest.getArrangement()).orElseThrow(ArrangementNotFoundException::new);
         ArrangementInOrder arrangementInOrder = new ArrangementInOrder(arrangement, order, arrangement.getFrom_date(), arrangement.getTo_date(), chargeRequest.getAmount().doubleValue());
         this.arrangementInOrderRepository.save(arrangementInOrder);
-        double totalCost = this.arrangementInOrderRepository.findByOrderAndFromDateAfter(order, LocalDate.now())
+        double totalCost = this.arrangementInOrderRepository.findByOrderAndFromDateGreaterThanEqual(order, LocalDate.now())
                 .stream().mapToDouble(ArrangementInOrder::getPrice).sum();
         order.setTotalCost(totalCost);
         this.orderRepository.save(order);

@@ -2,6 +2,8 @@ package com.project.domain.relations;
 
 import com.project.domain.Arrangement;
 import com.project.domain.Order;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,8 @@ import java.time.LocalDate;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ArrangementInOrder {
 
     @Id
@@ -25,9 +29,9 @@ public class ArrangementInOrder {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private LocalDate from_date;
+    private LocalDate fromDate;
 
-    private LocalDate to_date;
+    private LocalDate toDate;
 
     private Double price;
 
@@ -38,8 +42,8 @@ public class ArrangementInOrder {
                               Double price) {
         this.arrangement = arrangement;
         this.order = order;
-        this.from_date = from_date;
-        this.to_date = to_date;
+        this.fromDate = from_date;
+        this.toDate = to_date;
         this.price = price;
     }
 }

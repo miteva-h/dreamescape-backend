@@ -90,18 +90,17 @@ class PlaceControllerTest {
 
     @Test
     public void add_ShouldReturnResponseEntityOfPlace() throws Exception {
-        PlaceDto placeDto = new PlaceDto("placeName", "placeLocation", "placeDescription");
-        Place place = new Place("placeName", "placeLocation", "placeDescription");
+        PlaceDto placeDto = new PlaceDto("placeName", "placeDescription", 0.0, 0.0);
+        Place place = new Place("placeName", "placeDescription", 0.0, 0.0);
 
 
         when(placeService.add(placeDto)).thenReturn(Optional.of(place));
 
         mockMvc.perform(post("/places/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(placeDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(placeDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(placeDto.getName())))
-                .andExpect(jsonPath("$.location", is(placeDto.getLocation())))
                 .andExpect(jsonPath("$.description", is(placeDto.getDescription())));
 
         verify(placeService, times(1)).add(placeDto);
@@ -114,8 +113,8 @@ class PlaceControllerTest {
         when(placeService.add(placeDto)).thenReturn(Optional.empty());
 
         mockMvc.perform(post("/places/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(placeDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(placeDto)))
                 .andExpect(status().isBadRequest());
 
         verify(placeService, times(1)).add(placeDto);
@@ -130,8 +129,8 @@ class PlaceControllerTest {
         when(placeService.edit(id, placeDto)).thenReturn(Optional.of(place));
 
         mockMvc.perform(put("/places/{id}/edit", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(placeDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(placeDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(place.getId())));
 
@@ -146,8 +145,8 @@ class PlaceControllerTest {
         when(placeService.edit(id, placeDto)).thenReturn(Optional.empty());
 
         mockMvc.perform(put("/places/{id}/edit", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(placeDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(placeDto)))
                 .andExpect(status().isBadRequest());
 
         verify(placeService, times(1)).edit(id, placeDto);

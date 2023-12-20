@@ -16,4 +16,6 @@ public interface ReviewService {
 
     Optional<Review> findById(Long id);
 
+    Boolean getPermissionToAdd(Long id,String username);
+
 }

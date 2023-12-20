@@ -5,6 +5,7 @@ import com.project.config.JwtAuthConstants;
 import com.project.config.filters.JWTAuthorizationFilter;
 import com.project.domain.Arrangement;
 import com.project.domain.dto.ArrangementDto;
+import com.project.domain.relations.ArrangementInOrder;
 import com.project.domain.relations.ArrangementInShoppingCart;
 import com.project.service.ArrangementService;
 import lombok.RequiredArgsConstructor;
@@ -45,4 +46,13 @@ public class ArrangementController {
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/booked")
+    public List<ArrangementInShoppingCart> findAllBookedArrangements() {
+        return this.arrangementService.getAllBookedArrangements();
+    }
+
+    @GetMapping("/paid")
+    public List<ArrangementInOrder> findAllPaidArrangements() {
+        return this.arrangementService.getAllPaidArrangements();
+    }
 }

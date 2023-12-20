@@ -12,7 +12,7 @@ public class RegisterDto {
     private String repeatPassword;
     private String firstName;
     private String lastName;
-    private String role;
+    private String role = "USER";
 
     public RegisterDto(String username,
                        String password,

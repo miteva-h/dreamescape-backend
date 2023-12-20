@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        #invoice {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+        #header, #footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #customer-message, #bill-to, #details, #payment, #items, #totals {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .flex-end {
+            text-align: right;
+        }
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .totals-label {
+            flex: 1;
+            text-align: left;
+        }
+        .totals-value {
+            flex: 0 0 120px;
+            text-align: right;
+        }
+        a {
+            color: #0077CC;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div id="invoice">
+    <div id="header">
+        <div th:text="${business.name}">Business Name</div>
+        <div th:text="${business.address}">Street Address, City, Country</div>
+        <div th:text="${business.zip}">Zip Code</div>
+        <div th:text="${invoice.number}">Invoice# 00000</div>
+        <div th:text="${invoice.date}">Issue date mm/dd/yyyy</div>
+    </div>
+
+    <div id="customer-message">
+        <p th:text="${message}">Add a message here for your customer.</p>
+    </div>
+
+    <div id="bill-to">
+        <div>Bill To</div>
+        <div th:text="${customer.name}">Customer name</div>
+        <div th:text="${customer.email}">Email address</div>
+        <div th:text="${customer.phone}">Phone number</div>
+        <div th:text="${customer.address}">Street address</div>
+        <div th:text="${customer.zip}">Zip code, city, country</div>
+    </div>
+
+    <div id="details">
+        <div>Details</div>
+        <div th:text="${details}">Enter a brief description about your job or project.</div>
+    </div>
+
+    <div id="payment">
+        <div>Payment</div>
+        <div th:text="${payment.dueDate}">Due date mm/dd/yyyy</div>
+        <div th:text="${payment.amount}">$0.00</div>
+    </div>
+
+    <div id="items">
+        <!-- Header row for items -->
+        <div class="flex-container">
+            <div>Item</div>
+            <div class="flex-end">Qty</div>
+            <div class="flex-end">Price</div>
+            <div class="flex-end">Amount</div>
+        </div>
+        <!-- Repeat for each item -->
+        <div th:each="item : ${invoice.items}" class="flex-container">
+            <div th:text="${item.name}">Item name</div>
+            <div class="flex-end" th:text="${item.qty}">0</div>
+            <div class="flex-end" th:text="${item.price}">$0.00</div>
+            <div class="flex-end" th:text="${item.total}">$0.00</div>
+        </div>
+    </div>
+
+    <div id="totals">
+        <div class="totals-row">
+            <div class="totals-label">Subtotal</div>
+            <div class="totals-value" th:text="${invoice.subtotal}">$0000.00</div>
+        </div>
+        <div class="totals-row">
+            <div class="totals-label">Tax</div>
+            <div class="totals-value" th:text="${invoice.tax}">$0000.00</div>
+        </div>
+        <div class="totals-row">
+            <div class="totals-label">Total Due</div>
+            <div class="totals-value" th:text="${invoice.total}">$0000.00</div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <p>Enjoy your dream vacation.</p>
+    </div>
+</div>
+</body>
+</html>

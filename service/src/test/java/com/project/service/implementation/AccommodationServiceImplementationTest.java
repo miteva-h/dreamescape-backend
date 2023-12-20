@@ -83,7 +83,7 @@ public class AccommodationServiceImplementationTest {
 
     @Test
     public void checkIfPresent_ShouldReturnSuccess() {
-        AccommodationDto accommodationDto = new AccommodationDto("Test Accommodation", null, null, "", null, 0.0, null);
+        AccommodationDto accommodationDto = new AccommodationDto("Test Accommodation", null, null, 0, "", "", 0.0, 0.0, null, 0.0, null);
         Accommodation accommodation = new Accommodation();
         accommodation.setName("Test Accommodation");
         when(accommodationRepository.findAll()).thenReturn(Collections.singletonList(accommodation));
@@ -95,7 +95,7 @@ public class AccommodationServiceImplementationTest {
 
     @Test
     public void checkIfPresent_ShouldReturnFailure() {
-        AccommodationDto accommodationDto = new AccommodationDto("Test Accommodation", null, null, "", null, 0.0, null);
+        AccommodationDto accommodationDto = new AccommodationDto("Test Accommodation", null, null, 0, "", "", 0.0, 0.0, null, 0.0, null);
         when(accommodationRepository.findAll()).thenReturn(Collections.emptyList());
 
         Boolean result = accommodationService.checkIfPresent(accommodationDto);
@@ -105,7 +105,7 @@ public class AccommodationServiceImplementationTest {
 
     @Test
     public void checkIfPresent_NegativeTest() {
-        AccommodationDto accommodationDto = new AccommodationDto("Test Accommodation", null, null, "", null, 0.0, null);
+        AccommodationDto accommodationDto = new AccommodationDto("Test Accommodation", null, null, 0, "", "", 0.0, 0.0, null, 0.0, null);
         Accommodation accommodation = new Accommodation();
         accommodation.setName("Different Name");
         when(accommodationRepository.findAll()).thenReturn(Collections.singletonList(accommodation));
@@ -117,7 +117,7 @@ public class AccommodationServiceImplementationTest {
 
     @Test
     public void add_ShouldReturnOptionalOfAccommodation() {
-        AccommodationDto ad1 = new AccommodationDto("Test Accommodation", TypeOfAccommodation.PRIVATE_VILLA, TypeOfBoard.FULL_BOARD, "Test Description", 1L, 100.0, "Test Photo");
+        AccommodationDto ad1 = new AccommodationDto("Test Accommodation", TypeOfAccommodation.PRIVATE_VILLA, TypeOfBoard.FULL_BOARD, 5, "Test Destination", "Test Description", 0.0, 0.0, 1L, 100.0, "Test Photo");
         Place place = new Place();
         place.setId(1L);
 
@@ -142,9 +142,9 @@ public class AccommodationServiceImplementationTest {
 
     @Test
     public void add_TestIfAlreadyExists() {
-        AccommodationDto ad1 = new AccommodationDto("Test Accommodation", TypeOfAccommodation.PRIVATE_VILLA, TypeOfBoard.FULL_BOARD, "Test Description", 1L, 100.0, "Test Photo");
+        AccommodationDto ad1 = new AccommodationDto("Test Accommodation", TypeOfAccommodation.PRIVATE_VILLA, TypeOfBoard.FULL_BOARD, 5, "Test Destination", "Test Description", 0.0, 0.0, 1L, 100.0, "Test Photo");
 
-        when(accommodationRepository.findAll()).thenReturn(Collections.singletonList(new Accommodation("Test Accommodation", TypeOfAccommodation.CONTEMPORARY_CABIN, TypeOfBoard.HALF_BOARD, "", null, 0.0, "")));
+        when(accommodationRepository.findAll()).thenReturn(Collections.singletonList(new Accommodation("Test Accommodation", TypeOfAccommodation.CONTEMPORARY_CABIN, TypeOfBoard.HALF_BOARD, 5, "", "", 0.0, 0.0, null, 0.0, "")));
 
         Optional<Accommodation> result = accommodationService.add(ad1);
 
@@ -155,11 +155,11 @@ public class AccommodationServiceImplementationTest {
 
     @Test
     public void edit_ShouldReturnOptionalOfAccommodation() {
-        AccommodationDto ad1 = new AccommodationDto("Test Accommodation", TypeOfAccommodation.PRIVATE_VILLA, TypeOfBoard.FULL_BOARD, "Test Description", 2L, 100.0, "Test Photo");
+        AccommodationDto ad1 = new AccommodationDto("Test Accommodation", TypeOfAccommodation.PRIVATE_VILLA, TypeOfBoard.FULL_BOARD, 5, "Test Destination", "Test Description", 0.0, 0.0, 2L, 100.0, "Test Photo");
         Place place = new Place();
         place.setId(2L);
         place.setName("Test Place");
-        Accommodation a1 = new Accommodation("Old Accommodation", TypeOfAccommodation.PRIVATE_ESTATE, TypeOfBoard.HALF_BOARD, "Old Description", place, 50.0, "Old Photo");
+        Accommodation a1 = new Accommodation("Old Accommodation", TypeOfAccommodation.PRIVATE_ESTATE, TypeOfBoard.HALF_BOARD, 5, "Old Destination", "Old Description", 0.0, 0.0, place, 50.0, "Old Photo");
         a1.setId(1L);
 
         when(accommodationRepository.findById(1L)).thenReturn(Optional.of(a1));
@@ -183,11 +183,11 @@ public class AccommodationServiceImplementationTest {
 
     @Test
     public void edit_ShouldSetPlace() {
-        AccommodationDto ad1 = new AccommodationDto("Test Accommodation", TypeOfAccommodation.PRIVATE_VILLA, TypeOfBoard.FULL_BOARD, "Test Description", 2L, 100.0, "Test Photo");
+        AccommodationDto ad1 = new AccommodationDto("Test Accommodation", TypeOfAccommodation.PRIVATE_VILLA, TypeOfBoard.FULL_BOARD, 5, "Test Destination", "Test Description", 0.0, 0.0, 2L, 100.0, "Test Photo");
         Place place = new Place();
         place.setId(2L);
         place.setName("Test Place");
-        Accommodation a1 = new Accommodation("Old Accommodation", TypeOfAccommodation.PRIVATE_ESTATE, TypeOfBoard.HALF_BOARD, "Old Description", null, 50.0, "Old Photo");
+        Accommodation a1 = new Accommodation("Old Accommodation", TypeOfAccommodation.PRIVATE_ESTATE, TypeOfBoard.HALF_BOARD, 5, "Old Destination", "Old Description", 0.0, 0.0, null, 50.0, "Old Photo");
         a1.setId(1L);
 
         when(accommodationRepository.findById(1L)).thenReturn(Optional.of(a1));

@@ -2,11 +2,14 @@ package com.project.domain;
 
 import com.project.domain.identity.User;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class Review {

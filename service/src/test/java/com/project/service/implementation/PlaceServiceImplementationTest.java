@@ -40,8 +40,8 @@ public class PlaceServiceImplementationTest {
     @Test
     public void findAll_ShouldReturnListOfPlaces() {
         List<Place> expectedPlaces = Arrays.asList(
-                new Place("Place 1", "Location 1", "Description 1"),
-                new Place("Place 2", "Location 2", "Description 2")
+                new Place("Place 1", "Description 1", 0.0, 0.0),
+                new Place("Place 2", "Description 2", 0.0, 0.0)
         );
         when(placeRepository.findAll()).thenReturn(expectedPlaces);
 
@@ -53,8 +53,8 @@ public class PlaceServiceImplementationTest {
     @Test
     public void findAllByNameContaining_ShouldReturnListOfPlaces() {
         List<Place> expectedPlaces = Arrays.asList(
-                new Place("Place 1", "Location 1", "Description 1"),
-                new Place("Place 2", "Location 2", "Description 2")
+                new Place("Place 1", "Description 1", 0.0, 0.0),
+                new Place("Place 2", "Description 2", 0.0, 0.0)
         );
         when(placeRepository.findAllByNameContainingIgnoreCase("Place")).thenReturn(expectedPlaces);
 
@@ -65,7 +65,7 @@ public class PlaceServiceImplementationTest {
 
     @Test
     public void findById_ShouldReturnOptionalOfPlace() {
-        Place expectedPlace = new Place("Place 1", "Location 1", "Description 1");
+        Place expectedPlace = new Place("Place 1", "Description 1", 0.0, 0.0);
         when(placeRepository.findById(1L)).thenReturn(Optional.of(expectedPlace));
 
         Optional<Place> actualPlace = placeService.findById(1L);
@@ -75,8 +75,8 @@ public class PlaceServiceImplementationTest {
 
     @Test
     public void checkIfPresent_ShouldReturnSuccess() {
-        PlaceDto placeDto = new PlaceDto("Place 1", "Location 1", "Description 1");
-        Place place = new Place("Place 1", "Location 1", "Description 1");
+        PlaceDto placeDto = new PlaceDto("Place 1", "Description 1", 0.0, 0.0);
+        Place place = new Place("Place 1", "Description 1", 0.0, 0.0);
         List<Place> places = Collections.singletonList(place);
         when(placeRepository.findAll()).thenReturn(places);
 
@@ -87,8 +87,8 @@ public class PlaceServiceImplementationTest {
 
     @Test
     public void checkIfPresent_ShouldReturnFailure() {
-        PlaceDto placeDto = new PlaceDto("Place 2", "Location 2", "Description 2");
-        Place place = new Place("Place 1", "Location 1", "Description 1");
+        PlaceDto placeDto = new PlaceDto("Place 2", "Description 2", 0.0, 0.0);
+        Place place = new Place("Place 1", "Description 1", 0.0, 0.0);
         List<Place> places = Collections.singletonList(place);
         when(placeRepository.findAll()).thenReturn(places);
 
@@ -99,8 +99,8 @@ public class PlaceServiceImplementationTest {
 
     @Test
     public void add_ShouldReturnOptionalOfPlace() {
-        PlaceDto placeDto = new PlaceDto("Place 1", "Location 1", "Description 1");
-        Place expectedPlace = new Place("Place 1", "Location 1", "Description 1");
+        PlaceDto placeDto = new PlaceDto("Place 1", "Description 1", 0.0, 0.0);
+        Place expectedPlace = new Place("Place 1", "Description 1", 0.0, 0.0);
         when(placeRepository.save(expectedPlace)).thenReturn(expectedPlace);
 
         Optional<Place> actualPlace = placeService.add(placeDto);
@@ -109,10 +109,10 @@ public class PlaceServiceImplementationTest {
     }
 
     @Test
-    public void add_TestIfAlreadyExists(){
-        PlaceDto placeDto = new PlaceDto("Place 1", "Location 1", "Description 1");
+    public void add_TestIfAlreadyExists() {
+        PlaceDto placeDto = new PlaceDto("Place 1", "Description 1", 0.0, 0.0);
 
-        when(placeRepository.findAll()).thenReturn(Collections.singletonList(new Place("Place 1", "Location 1", "Description 1")));
+        when(placeRepository.findAll()).thenReturn(Collections.singletonList(new Place("Place 1", "Description 1", 0.0, 0.0)));
 
         Optional<Place> result = placeService.add(placeDto);
 
@@ -123,8 +123,8 @@ public class PlaceServiceImplementationTest {
 
     @Test
     public void edit_ShouldReturnOptionalOfPlace() {
-        PlaceDto placeDto = new PlaceDto("Place New", "Location New", "Description New");
-        Place expectedPlace = new Place("Place 1", "Location 1", "Description 1");
+        PlaceDto placeDto = new PlaceDto("Place New", "Description New", 0.0, 0.0);
+        Place expectedPlace = new Place("Place 1", "Description 1", 0.0, 0.0);
         when(placeRepository.findById(1L)).thenReturn(Optional.of(expectedPlace));
         when(placeRepository.save(expectedPlace)).thenReturn(expectedPlace);
 
@@ -132,14 +132,13 @@ public class PlaceServiceImplementationTest {
 
         assertThat(actualPlace).isNotEmpty();
         assertThat(actualPlace.get().getName()).isEqualTo("Place New");
-        assertThat(actualPlace.get().getLocation()).isEqualTo("Location New");
         assertThat(actualPlace.get().getDescription()).isEqualTo("Description New");
         verify(placeRepository, times(1)).findById(1L);
         verify(placeRepository, times(1)).save(expectedPlace);
     }
 
     @Test
-    public void delete_ShouldReturnVoid(){
+    public void delete_ShouldReturnVoid() {
         Place place = new Place();
         PhotoForPlace photo = new PhotoForPlace();
         photo.setPlace(place);

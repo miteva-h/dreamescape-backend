@@ -26,7 +26,16 @@ public class Accommodation {
     @Enumerated(EnumType.STRING)
     private TypeOfBoard typeOfBoard;
 
+    private Integer sleeps;
+
+    private String destination;
+
+    @Column(length = 1000)
     private String description;
+
+    private Double coordinate_x;
+
+    private Double coordinate_y;
 
     @ManyToOne
     @JoinColumn(name = "place_id", nullable = false)
@@ -47,14 +56,22 @@ public class Accommodation {
     public Accommodation(String name,
                          TypeOfAccommodation typeOfAccommodation,
                          TypeOfBoard typeOfBoard,
+                         Integer sleeps,
+                         String destination,
                          String description,
+                         Double coordinate_x,
+                         Double coordinate_y,
                          Place place,
                          Double pricePerNight,
                          String photo) {
         this.name = name;
         this.typeOfAccommodation = typeOfAccommodation;
         this.typeOfBoard = typeOfBoard;
+        this.sleeps = sleeps;
+        this.destination = destination;
         this.description = description;
+        this.coordinate_x = coordinate_x;
+        this.coordinate_y = coordinate_y;
         this.place = place;
         this.pricePerNight = pricePerNight;
         this.photo = photo;

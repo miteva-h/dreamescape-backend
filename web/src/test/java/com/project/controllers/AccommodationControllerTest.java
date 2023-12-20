@@ -118,18 +118,18 @@ public class AccommodationControllerTest {
         Place place = new Place();
         place.setId(1L);
         AccommodationDto accommodationDto = new AccommodationDto("Test Accommodation",
-                TypeOfAccommodation.CONTEMPORARY_CABIN, TypeOfBoard.ALL_INCLUSIVE,
-                "Test Description", 1L, 10.0, null);
+                TypeOfAccommodation.CONTEMPORARY_CABIN, TypeOfBoard.ALL_INCLUSIVE, 5,
+                "Test Destination", "Test Description", 0.0, 0.0, 1L, 10.0, null);
 
         Accommodation accommodation = new Accommodation("Test Accommodation",
-                TypeOfAccommodation.CONTEMPORARY_CABIN, TypeOfBoard.ALL_INCLUSIVE,
-                "Test Description", place, 10.0, null);
+                TypeOfAccommodation.CONTEMPORARY_CABIN, TypeOfBoard.ALL_INCLUSIVE, 5,
+                "Test Destination", "Test Description", 0.0, 0.0, place, 10.0, null);
 
         when(accommodationService.add(accommodationDto)).thenReturn(Optional.of(accommodation));
 
         mockMvcAccommodation.perform(post("/accommodations/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(accommodationDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(accommodationDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(accommodationDto.getName())))
                 .andExpect(jsonPath("$.description", is(accommodationDto.getDescription())))
@@ -141,15 +141,15 @@ public class AccommodationControllerTest {
     @Test
     public void edit_ShouldReturnResponseEntityOfAccommodation() throws Exception {
         AccommodationDto accommodationDto = new AccommodationDto("Test Accommodation",
-                TypeOfAccommodation.CONTEMPORARY_CABIN, TypeOfBoard.ALL_INCLUSIVE,
-                "Test Description", 2L, 10.0, null);
+                TypeOfAccommodation.CONTEMPORARY_CABIN, TypeOfBoard.ALL_INCLUSIVE, 5,
+                "Test Destination", "Test Description", 0.0, 0.0, 2L, 10.0, null);
         Accommodation savedAccommodation = new Accommodation();
         savedAccommodation.setId(1L);
         when(accommodationService.edit(1L, accommodationDto)).thenReturn(Optional.of(savedAccommodation));
 
         mockMvcAccommodation.perform(put("/accommodations/1/edit")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(accommodationDto)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(accommodationDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)));
     }

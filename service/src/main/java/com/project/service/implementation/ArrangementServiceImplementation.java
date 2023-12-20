@@ -8,11 +8,9 @@ import com.project.domain.exceptions.AccommodationNotFoundException;
 import com.project.domain.exceptions.ArrangementNotFoundException;
 import com.project.domain.exceptions.UserNotFoundException;
 import com.project.domain.identity.User;
+import com.project.domain.relations.ArrangementInOrder;
 import com.project.domain.relations.ArrangementInShoppingCart;
-import com.project.repository.AccommodationRepository;
-import com.project.repository.ArrangementInShoppingCartRepository;
-import com.project.repository.ArrangementRepository;
-import com.project.repository.UserRepository;
+import com.project.repository.*;
 import com.project.service.ArrangementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,6 +30,8 @@ public class ArrangementServiceImplementation implements ArrangementService {
     private final AccommodationRepository accommodationRepository;
     private final UserRepository userRepository;
     private final ArrangementInShoppingCartRepository arrangementInShoppingCartRepository;
+    private final ArrangementInOrderRepository arrangementInOrderRepository;
+
 
     @Override
     public List<Arrangement> findAllByAccommodation(Long accommodationId) {
@@ -75,6 +75,16 @@ public class ArrangementServiceImplementation implements ArrangementService {
         User user = this.userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
         ShoppingCart shoppingCart = user.getShoppingCart();
         return arrangementInShoppingCartRepository.findAllByShoppingCart(shoppingCart);
+    }
+
+    @Override
+    public List<ArrangementInShoppingCart> getAllBookedArrangements() {
+        return arrangementInShoppingCartRepository.findAll();
+    }
+
+    @Override
+    public List<ArrangementInOrder> getAllPaidArrangements() {
+        return arrangementInOrderRepository.findAll();
     }
 
     @Override

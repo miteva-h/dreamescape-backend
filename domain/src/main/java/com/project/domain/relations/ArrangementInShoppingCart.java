@@ -22,7 +22,7 @@ public class ArrangementInShoppingCart {
     private Arrangement arrangement;
 
     @ManyToOne
-    @JoinColumn(name = "shoppingCart_id")
+    @JoinColumn(name = "shopping_cart_id")
     private ShoppingCart shoppingCart;
 
     private LocalDate from_date;

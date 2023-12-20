@@ -47,7 +47,7 @@ public class PlaceServiceImplementation implements PlaceService {
     @Override
     public Optional<Place> add(PlaceDto placeDto) {
         if (!checkIfPresent(placeDto)) {
-            Place place = new Place(placeDto.getName(), placeDto.getLocation(), placeDto.getDescription());
+            Place place = new Place(placeDto.getName(), placeDto.getDescription(), placeDto.getCoordinate_x(), placeDto.getCoordinate_y());
             this.placeRepository.save(place);
             return Optional.of(place);
         }
@@ -58,8 +58,9 @@ public class PlaceServiceImplementation implements PlaceService {
     public Optional<Place> edit(Long id, PlaceDto placeDto) {
         Place place = this.placeRepository.findById(id).orElseThrow(PlaceNotFoundException::new);
         place.setName(placeDto.getName());
-        place.setLocation(placeDto.getLocation());
         place.setDescription(placeDto.getDescription());
+        place.setCoordinate_x(placeDto.getCoordinate_x());
+        place.setCoordinate_y(placeDto.getCoordinate_y());
         this.placeRepository.save(place);
         return Optional.of(place);
     }
