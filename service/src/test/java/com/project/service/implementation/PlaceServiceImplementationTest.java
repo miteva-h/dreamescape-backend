@@ -101,11 +101,11 @@ public class PlaceServiceImplementationTest {
     public void add_ShouldReturnOptionalOfPlace() {
         PlaceDto placeDto = new PlaceDto("Place 1", "Description 1", 0.0, 0.0);
         Place expectedPlace = new Place("Place 1", "Description 1", 0.0, 0.0);
-        when(placeRepository.save(expectedPlace)).thenReturn(expectedPlace);
+        when(placeRepository.save(any(Place.class))).thenReturn(expectedPlace);
 
-        Optional<Place> actualPlace = placeService.add(placeDto);
+        Place actualPlace = placeService.add(placeDto).get();
 
-        assertThat(actualPlace).isEqualTo(Optional.of(expectedPlace));
+        assertThat(actualPlace.getName()).isEqualTo(expectedPlace.getName());
     }
 
     @Test

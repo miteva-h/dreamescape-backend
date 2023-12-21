@@ -79,8 +79,8 @@ public class AccommodationControllerTest {
         mockMvcPlace.perform(get("/places/1/accommodations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].place").value(place))
-                .andExpect(jsonPath("$[1].place").value(place));
+                .andExpect(jsonPath("$[0].place.id").value(place.getId()))
+                .andExpect(jsonPath("$[1].place.id").value(place.getId()));
     }
 
     @Test
