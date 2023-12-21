@@ -28,8 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomUsernamePasswordAuthenticationProvider authenticationProvider;
     private final UserService userService;
 
-    private final String [] allowedOrigins = {"http://localhost:3000",
-            "https://miteva-h.github.io/dreamescape-frontend"};
+    private final String [] allowedOrigins = {"http://localhost:3000", "https://miteva-h.github.io"};
 
     public SecurityConfig(PasswordEncoder passwordEncoder,
                           CustomUsernamePasswordAuthenticationProvider authenticationProvider, UserService userService) {
