@@ -1,60 +1,44 @@
 package com.project.service.utils;
 
 import com.project.domain.relations.ArrangementInOrder;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class PdfGenerator {
-    public static byte[] generatePdfStream(ArrangementInOrder arrangementInOrder) throws IOException {
-        PDDocument document = new PDDocument();
-        PDPage page = new PDPage();
-        document.addPage(page);
-
+    public static byte[] generatePdfStream(ArrangementInOrder arrangementInOrder) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfDocument pdfDocument = new PdfDocument(new PdfWriter(outputStream));
+        Document document = new Document(pdfDocument);
 
-        try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-            contentStream.beginText();
-            contentStream.setFont(PDType1Font.TIMES_BOLD, 14);
-            contentStream.setLeading(15f);
-            contentStream.newLineAtOffset(50, 750);
+        try {
+            document.add(new Paragraph("-----Order Details-----")
+                    .setTextAlignment(TextAlignment.CENTER));
 
-            contentStream.showText("-----Order Details-----");
-            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-            contentStream.newLineAtOffset(0, -20);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-            contentStream.showText("Villa: " + arrangementInOrder.getArrangement().getAccommodation().getName());
-            contentStream.newLine();
-            contentStream.showText("Destination: " + arrangementInOrder.getArrangement().getAccommodation().getDestination());
-            contentStream.newLine();
-            contentStream.showText("Country/region: " + arrangementInOrder.getArrangement().getAccommodation().getPlace().getName());
-            contentStream.newLine();
-            contentStream.showText("From Date: " + arrangementInOrder.getFromDate().format(formatter));
-            contentStream.newLine();
-            contentStream.showText("To Date: " + arrangementInOrder.getToDate().format(formatter));
-            contentStream.newLine();
-            contentStream.showText("Customer: " + arrangementInOrder.getOrder().getUser().getUsername());
-            contentStream.newLine();
-            contentStream.showText("Price: " + String.format("%.2f", arrangementInOrder.getPrice()) +" €");
-            contentStream.newLine();
-            contentStream.newLine();
+            document.add(new Paragraph("Villa: " + arrangementInOrder.getArrangement().getAccommodation().getName()));
+            document.add(new Paragraph("Destination: " + arrangementInOrder.getArrangement().getAccommodation().getDestination()));
+            document.add(new Paragraph("Country/region: " + arrangementInOrder.getArrangement().getAccommodation().getPlace().getName()));
+            document.add(new Paragraph("From Date: " + arrangementInOrder.getFromDate().format(formatter)));
+            document.add(new Paragraph("To Date: " + arrangementInOrder.getToDate().format(formatter)));
+            document.add(new Paragraph("Customer: " + arrangementInOrder.getOrder().getUser().getUsername()));
+            document.add(new Paragraph("Price: " + String.format("%.2f", arrangementInOrder.getPrice()) + " €"));
 
             LocalDateTime currentDateTime = LocalDateTime.now();
             formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             String formattedDateTime = currentDateTime.format(formatter);
-            contentStream.showText("Generated at: " + formattedDateTime +"h");
-            contentStream.endText();
-        }
+            document.add(new Paragraph("Generated at: " + formattedDateTime + "h"));
 
-        document.save(outputStream);
-        document.close();
+        } finally {
+            document.close();
+        }
 
         return outputStream.toByteArray();
     }

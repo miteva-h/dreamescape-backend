@@ -52,12 +52,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/arrangements/user", "/arrangements/add", "/arrangements/{id}/delete",
-                        "/reviews/add", "/reviews/{id}/delete", "/api/payment", "/orders/**", "/invoices")
+                        "/reviews/add", "/reviews/{id}/delete", "/api/payment", "/orders/**")
                 .hasAuthority("USER")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/places/add", "/places/{id}/**", "/places/{id}/photo", "/photos/{id}/**",
-                        "/accommodations/add", "/accommodations/{id}/**","/invoices").hasAuthority("ADMIN")
+                        "/accommodations/add", "/accommodations/{id}/**").hasAuthority("ADMIN")
+                .antMatchers("/invoices").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
